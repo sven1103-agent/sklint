@@ -1,36 +1,115 @@
 # sklint
 
-`sklint` validates an Agent Skills "skill directory" against the Agent Skills open specification. It checks `SKILL.md` frontmatter rules, required fields, optional directories, and best-practice warnings.
+> Validate Agent Skills against the official Agent Skills specification — fast, strict, and CI-ready.
 
-**What it validates**
-- Skill directory structure (`SKILL.md`, optional `scripts/`, `references/`, `assets/`)
-- Frontmatter delimiters, YAML validity, and required fields
-- `name`, `description`, `compatibility`, `license`, `metadata`, `allowed-tools` constraints
-- Best-practice warnings (empty body, long file, unknown keys, empty optional directories)
-- Markdown file reference hygiene
+`sklint` checks that a skill directory complies with the Agent Skills open standard.  
+It validates structure, frontmatter rules, required fields, and common best-practice issues.
 
-**Installation**
-- Go install:
-  - `go install github.com/your-org/agentskills-validator/cmd/sklint@latest`
-- Or download a binary from Releases (if CI is enabled).
+---
 
-**Usage**
-- `sklint ./my-skill`
-- `sklint --format json --output report.json ./my-skill`
-- `sklint --strict ./my-skill`
+## 🚀 Install
 
-**Output (text)**
+### Recommended (Go users)
+
+```bash
+go install github.com/your-org/agentskills-validator/cmd/sklint@latest
+```
+
+Install a specific release:
+
+```bash
+go install github.com/your-org/agentskills-validator/cmd/sklint@v2026.02.16
+```
+
+### Binary download
+
+Prebuilt binaries for Linux, macOS, and Windows are available on the **Releases** page.
+
+> macOS note: If you download a binary directly, you may need:
+> ```bash
+> xattr -dr com.apple.quarantine ./sklint
+> ```
+
+---
+
+## ⚡ Quick Start
+
+Validate a skill directory:
+
+```bash
+sklint ./my-skill
+```
+
+Example:
+
+```bash
+sklint ./skills/pdf-processing
+```
+
+Example output:
+
 ```
 Errors
 - NAME_MISMATCH_DIRECTORY SKILL.md:3 Frontmatter name 'pdf-processing' must match directory name 'pdf_processing'.
 
-Warnings
-- SKILL_MD_TOO_LONG_LINES SKILL.md SKILL.md is 742 lines; recommended under 500 lines.
-
-1 errors, 1 warnings - INVALID
+1 errors, 0 warnings - INVALID
 ```
 
-**Output (json)**
+---
+
+## 🧪 CI Usage
+
+Strict mode fails on warnings:
+
+```bash
+sklint --strict .
+```
+
+JSON output for pipelines:
+
+```bash
+sklint --format json --output report.json .
+```
+
+Exit codes:
+
+| Code | Meaning |
+|------|---------|
+| 0 | Valid (no errors; warnings allowed unless `--strict`) |
+| 1 | Validation errors (or warnings in strict mode) |
+| 2 | Runtime / usage error |
+
+---
+
+## ✅ What sklint Validates
+
+### Required structure
+- `SKILL.md` present
+- Optional `scripts/`, `references/`, `assets/` directories validated if present
+
+### Frontmatter rules
+- Proper `---` delimiters
+- Valid YAML
+- Required fields: `name`, `description`
+
+### Field constraints
+- `name` format, length, and directory match
+- `description` length
+- `compatibility`, `license`
+- `metadata` must be string → string
+- `allowed-tools` format
+
+### Best-practice warnings
+- Empty Markdown body
+- Very long `SKILL.md`
+- Unknown top-level keys
+- Empty optional directories
+- Suspicious or missing relative file references
+
+---
+
+## 📦 Example JSON Output
+
 ```json
 {
   "path": "/abs/path/to/skill",
@@ -44,18 +123,33 @@ Warnings
       "line": 3
     }
   ],
-  "warnings": [
-    {
-      "level": "warning",
-      "code": "SKILL_MD_TOO_LONG_LINES",
-      "message": "SKILL.md is 742 lines; recommended under 500 lines.",
-      "file": "SKILL.md"
-    }
-  ]
+  "warnings": []
 }
 ```
 
-**Exit codes**
-- `0` valid (no errors; warnings allowed unless `--strict`)
-- `1` validation errors present (or warnings in `--strict`)
-- `2` runtime or usage error
+---
+
+## 🔧 CLI Options
+
+```bash
+sklint [options] <path>
+```
+
+Options:
+
+- `--format text|json`
+- `--strict`
+- `--no-warn`
+- `--output <file>`
+- `--schema-version <v>`
+- `--follow-symlinks`
+
+---
+
+## 🎯 Why sklint?
+
+- Designed specifically for the Agent Skills specification  
+- Safe by default (no unsafe symlink traversal)  
+- Works locally and in CI  
+- Zero dependencies at runtime  
+- Cross-platform  
