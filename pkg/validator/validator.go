@@ -13,7 +13,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"sklint/internal/parse"
+	"github.com/sven1103-agent/sklint/internal/parse"
 )
 
 const (

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"sklint/pkg/validator"
+	"github.com/sven1103-agent/sklint/pkg/validator"
 )
 
 func TestRenderText(t *testing.T) {

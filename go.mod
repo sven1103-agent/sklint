@@ -1,4 +1,4 @@
-module sklint
+module github.com/sven1103-agent/sklint
 
 go 1.21
 

@@ -7,21 +7,34 @@ It validates structure, frontmatter rules, required fields, and common best-prac
 
 ---
 
-## 🚀 Install
+## Install
 
-### Recommended (Go users)
+### From source (this repo)
 
 ```bash
-go install github.com/your-org/agentskills-validator/cmd/sklint@latest
+go install ./cmd/sklint
+```
+
+Install a specific tagged release (tags use `vYYYY-MM-DD`, e.g. `v2026-02-16`):
+
+```bash
+git checkout v2026-02-16
+go install ./cmd/sklint
+```
+
+### Install via `go install`
+
+```bash
+go install github.com/sven1103-agent/sklint/cmd/sklint@latest
 ```
 
 Install a specific release:
 
 ```bash
-go install github.com/your-org/agentskills-validator/cmd/sklint@v2026.02.16
+go install github.com/sven1103-agent/sklint/cmd/sklint@v2026-02-16
 ```
 
-### Binary download
+### Binary download (GitHub Releases)
 
 Prebuilt binaries for Linux, macOS, and Windows are available on the **Releases** page.
 

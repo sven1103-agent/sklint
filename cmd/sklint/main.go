@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"sklint/internal/report"
-	"sklint/pkg/validator"
+	"github.com/sven1103-agent/sklint/internal/report"
+	"github.com/sven1103-agent/sklint/pkg/validator"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"sklint/pkg/validator"
+	"github.com/sven1103-agent/sklint/pkg/validator"
 )
 
 func TestRenderJSON(t *testing.T) {

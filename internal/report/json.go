@@ -3,7 +3,7 @@ package report
 import (
 	"encoding/json"
 
-	"sklint/pkg/validator"
+	"github.com/sven1103-agent/sklint/pkg/validator"
 )
 
 func RenderJSON(result validator.Result) ([]byte, error) {
