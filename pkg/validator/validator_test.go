@@ -2,11 +2,21 @@ package validator
 
 import (
 	"path/filepath"
+	"runtime"
 	"testing"
 )
 
+func fixturePath(t *testing.T, name string) string {
+	t.Helper()
+	_, file, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("unable to locate test file path")
+	}
+	return filepath.Join(filepath.Dir(file), "..", "..", "testdata", name)
+}
+
 func TestValidMinimal(t *testing.T) {
-	result, err := ValidateSkill(filepath.Join("..", "..", "testdata", "valid-minimal"), Options{CheckRefsExist: true})
+	result, err := ValidateSkill(fixturePath(t, "valid-minimal"), Options{CheckRefsExist: true})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -19,7 +29,7 @@ func TestValidMinimal(t *testing.T) {
 }
 
 func TestMissingSkillMD(t *testing.T) {
-	result, err := ValidateSkill(filepath.Join("..", "..", "testdata", "invalid-missing-skillmd"), Options{CheckRefsExist: true})
+	result, err := ValidateSkill(fixturePath(t, "invalid-missing-skillmd"), Options{CheckRefsExist: true})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -37,7 +47,7 @@ func TestFrontmatterErrors(t *testing.T) {
 		{"invalid-frontmatter-not-mapping", codeFrontmatterNotMapping},
 	}
 	for _, tc := range cases {
-		result, err := ValidateSkill(filepath.Join("..", "..", "testdata", tc.name), Options{CheckRefsExist: true})
+		result, err := ValidateSkill(fixturePath(t, tc.name), Options{CheckRefsExist: true})
 		if err != nil {
 			t.Fatalf("unexpected error for %s: %v", tc.name, err)
 		}
@@ -59,7 +69,7 @@ func TestNameViolations(t *testing.T) {
 		{"invalid-name-mismatch", codeNameMismatchDirectory},
 	}
 	for _, tc := range cases {
-		result, err := ValidateSkill(filepath.Join("..", "..", "testdata", tc.name), Options{CheckRefsExist: true})
+		result, err := ValidateSkill(fixturePath(t, tc.name), Options{CheckRefsExist: true})
 		if err != nil {
 			t.Fatalf("unexpected error for %s: %v", tc.name, err)
 		}
@@ -76,7 +86,7 @@ func TestDescriptionLength(t *testing.T) {
 		{"invalid-description-too-long", codeDescriptionTooLong},
 	}
 	for _, tc := range cases {
-		result, err := ValidateSkill(filepath.Join("..", "..", "testdata", tc.name), Options{CheckRefsExist: true})
+		result, err := ValidateSkill(fixturePath(t, tc.name), Options{CheckRefsExist: true})
 		if err != nil {
 			t.Fatalf("unexpected error for %s: %v", tc.name, err)
 		}
@@ -93,7 +103,7 @@ func TestCompatibilityLength(t *testing.T) {
 		{"invalid-compatibility-too-long", codeCompatibilityTooLong},
 	}
 	for _, tc := range cases {
-		result, err := ValidateSkill(filepath.Join("..", "..", "testdata", tc.name), Options{CheckRefsExist: true})
+		result, err := ValidateSkill(fixturePath(t, tc.name), Options{CheckRefsExist: true})
 		if err != nil {
 			t.Fatalf("unexpected error for %s: %v", tc.name, err)
 		}
@@ -110,7 +120,7 @@ func TestMetadataValidation(t *testing.T) {
 		{"invalid-metadata-value-not-string", codeMetadataValueNotString},
 	}
 	for _, tc := range cases {
-		result, err := ValidateSkill(filepath.Join("..", "..", "testdata", tc.name), Options{CheckRefsExist: true})
+		result, err := ValidateSkill(fixturePath(t, tc.name), Options{CheckRefsExist: true})
 		if err != nil {
 			t.Fatalf("unexpected error for %s: %v", tc.name, err)
 		}
@@ -119,7 +129,7 @@ func TestMetadataValidation(t *testing.T) {
 }
 
 func TestAllowedToolsValidation(t *testing.T) {
-	result, err := ValidateSkill(filepath.Join("..", "..", "testdata", "invalid-allowed-tools-empty"), Options{CheckRefsExist: true})
+	result, err := ValidateSkill(fixturePath(t, "invalid-allowed-tools-empty"), Options{CheckRefsExist: true})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -127,7 +137,7 @@ func TestAllowedToolsValidation(t *testing.T) {
 }
 
 func TestReferenceWarnings(t *testing.T) {
-	result, err := ValidateSkill(filepath.Join("..", "..", "testdata", "reference-warnings"), Options{CheckRefsExist: true})
+	result, err := ValidateSkill(fixturePath(t, "reference-warnings"), Options{CheckRefsExist: true})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -138,7 +148,7 @@ func TestReferenceWarnings(t *testing.T) {
 }
 
 func TestLineCountWarning(t *testing.T) {
-	result, err := ValidateSkill(filepath.Join("..", "..", "testdata", "line-count-warning"), Options{CheckRefsExist: true})
+	result, err := ValidateSkill(fixturePath(t, "line-count-warning"), Options{CheckRefsExist: true})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -146,7 +156,7 @@ func TestLineCountWarning(t *testing.T) {
 }
 
 func TestStrictMode(t *testing.T) {
-	result, err := ValidateSkill(filepath.Join("..", "..", "testdata", "strict-warning-only"), Options{CheckRefsExist: true, Strict: true})
+	result, err := ValidateSkill(fixturePath(t, "strict-warning-only"), Options{CheckRefsExist: true, Strict: true})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
