@@ -17,8 +17,8 @@ jobs:
         run: |
           set -euo pipefail
           TAG="${GITHUB_REF_NAME}"
-          if ! [[ "$TAG" =~ ^v[0-9]{4}\.[0-9]{2}\.[0-9]{2}$ ]]; then
-            echo "Tag must match vYYYY.MM.DD (e.g., v2026.02.16). Got: $TAG"
+          if ! [[ "$TAG" =~ ^v[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "Tag must match vYYYY-MM-DD (e.g., v2026-02-16). Got: $TAG"
             exit 1
           fi
       - run: go test ./...
