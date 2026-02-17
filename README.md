@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/sven1103-agent/sklint/actions/workflows/release.yml/badge.svg)](https://github.com/sven1103-agent/sklint/actions)
 [![Go Version](https://img.shields.io/badge/go-1.21+-blue.svg)](https://go.dev/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-AGPL3-green.svg)](LICENSE)
 
 > Validate Agent Skills against the official Agent Skills specification — fast, strict, and CI-ready.
 
