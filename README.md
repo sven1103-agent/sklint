@@ -1,5 +1,9 @@
 # sklint
 
+[![CI](https://github.com/sven1103-agent/sklint/actions/workflows/release.yml/badge.svg)](https://github.com/sven1103-agent/sklint/actions)
+[![Go Version](https://img.shields.io/badge/go-1.21+-blue.svg)](https://go.dev/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 > Validate Agent Skills against the official Agent Skills specification — fast, strict, and CI-ready.
 
 `sklint` checks that a skill directory complies with the [Agent Skills open specification](https://agentskills.io/specification).  
@@ -45,9 +49,9 @@ Prebuilt binaries for Linux, macOS, and Windows are available on the [Releases p
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
-Validate a skill directory:
+Validate a skill directory (the folder containing `SKILL.md`):
 
 ```bash
 sklint ./my-skill
@@ -109,7 +113,7 @@ Successful validation output:
 
 ---
 
-## 🧪 CI Usage
+## CI Usage
 
 Strict mode fails on warnings:
 
@@ -133,11 +137,13 @@ Exit codes:
 
 ---
 
-## ✅ What sklint Validates
+## What sklint Validates
 
 ### Required structure
 - `SKILL.md` present
-- Optional `scripts/`, `references/`, `assets/` directories validated if present
+- Optional `scripts/`, `references/`, `assets/` directories:
+  - Must be directories (not files) if present
+  - Warns if directory exists but is empty
 
 ### Frontmatter rules
 - Proper `---` delimiters
@@ -164,7 +170,7 @@ Exit codes:
 
 ---
 
-## 📦 Example JSON Output
+## Example JSON Output
 
 ```json
 {
@@ -185,11 +191,15 @@ Exit codes:
 
 ---
 
-## 🔧 CLI Options
+## CLI Options
 
 ```bash
-sklint [options] <path>
+sklint [options] <skill-directory>
 ```
+
+Where `<skill-directory>` is the path to the folder containing `SKILL.md`.
+
+Run `sklint --help` to see usage information.
 
 Options:
 
@@ -314,10 +324,58 @@ func main() {
 
 ---
 
-## 🎯 Why sklint?
+## Troubleshooting
 
-- Designed specifically for the Agent Skills specification  
-- Safe by default (no unsafe symlink traversal)  
-- Works locally and in CI  
-- Zero dependencies at runtime  
-- Cross-platform  
+### macOS: "cannot be opened because the developer cannot be verified"
+
+If you downloaded a binary directly:
+```bash
+xattr -dr com.apple.quarantine ./sklint
+```
+
+### NAME_MISMATCH_DIRECTORY error
+
+The `name` field in SKILL.md must exactly match the directory name:
+```
+my-skill/           <- directory name
+└── SKILL.md
+    ---
+    name: my-skill  <- must match
+    ---
+```
+
+### Permission denied
+
+Ensure you have read access to all files in the skill directory:
+```bash
+chmod -R u+r ./my-skill
+```
+
+---
+
+## Why sklint?
+
+- **Specification-compliant**: Validates against the official Agent Skills spec
+- **Actionable output**: Error codes with line numbers and clear fix instructions
+- **CI-ready**: JSON output, strict mode, and meaningful exit codes
+- **Secure defaults**: Won't follow symlinks outside the skill directory
+- **Embeddable**: Use as a CLI or import as a Go library  
+
+---
+
+## License
+
+This project is licensed under the [AGPL-3.0 License](LICENSE).
+
+---
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Open an issue to discuss proposed changes
+2. Fork the repository and create a feature branch
+3. Run tests with `go test ./...`
+4. Submit a pull request
+
+See the test fixtures in `testdata/` for examples of valid and invalid skills.
