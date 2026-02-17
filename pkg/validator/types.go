@@ -4,7 +4,6 @@ type Options struct {
 	Strict         bool
 	NoWarn         bool
 	FollowSymlinks bool
-	SchemaVersion  int
 	CheckRefsExist bool
 }
 

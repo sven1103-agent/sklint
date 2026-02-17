@@ -150,12 +150,11 @@ sklint [options] <path>
 
 Options:
 
-- `--format text|json`
-- `--strict`
-- `--no-warn`
-- `--output <file>`
-- `--schema-version <v>`
-- `--follow-symlinks`
+- `--follow-symlinks`: Follow symlinks
+- `--format text|json`: Output format: text or json (default "text")
+- `--no-warn`: Suppress warnings
+- `--strict`: Treat warnings as errors
+- `--output <file>`: Write report to file
 
 ---
 

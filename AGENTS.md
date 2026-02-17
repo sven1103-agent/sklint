@@ -74,7 +74,6 @@ sklint <path>
 - `--strict` (treat warnings as errors)
 - `--no-warn` (suppress warnings)
 - `--output <file>` (write report to a file instead of stdout)
-- `--schema-version <v>` (default `1`; reserved for future compatibility)
 - Optional:
   - `--follow-symlinks` (default false; security-safe default)
 
@@ -103,7 +102,6 @@ type Options struct {
     Strict         bool
     NoWarn         bool
     FollowSymlinks bool
-    SchemaVersion  int
     CheckRefsExist bool // default true
 }
 
@@ -474,6 +472,6 @@ Add GitHub Actions workflow that:
 The validator is accepted when:
 - All mandatory tests pass (`go test ./...`).
 - CLI returns correct exit codes.
-- JSON output is stable and matches schema.
+- JSON output is stable.
 - It catches all specified errors and emits warnings as described.
 - It is safe by default (does not follow symlinks outside the skill root).

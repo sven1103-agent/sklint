@@ -11,27 +11,22 @@ import (
 
 func main() {
 	var (
-		format        string
-		strict        bool
-		noWarn        bool
-		output        string
-		schemaVersion int
-		followLinks   bool
+		format      string
+		strict      bool
+		noWarn      bool
+		output      string
+		followLinks bool
 	)
 
 	flag.StringVar(&format, "format", "text", "Output format: text or json")
 	flag.BoolVar(&strict, "strict", false, "Treat warnings as errors")
 	flag.BoolVar(&noWarn, "no-warn", false, "Suppress warnings")
 	flag.StringVar(&output, "output", "", "Write report to file")
-	flag.IntVar(&schemaVersion, "schema-version", 1, "Schema version")
 	flag.BoolVar(&followLinks, "follow-symlinks", false, "Follow symlinks")
 	flag.Parse()
 
 	if flag.NArg() != 1 {
 		exitWithError("Usage: sklint <path>")
-	}
-	if schemaVersion != 1 {
-		exitWithError(fmt.Sprintf("Unsupported schema version: %d", schemaVersion))
 	}
 	if format != "text" && format != "json" {
 		exitWithError(fmt.Sprintf("Unsupported format: %s", format))
@@ -42,7 +37,6 @@ func main() {
 		Strict:         strict,
 		NoWarn:         noWarn,
 		FollowSymlinks: followLinks,
-		SchemaVersion:  schemaVersion,
 		CheckRefsExist: true,
 	}
 
