@@ -495,7 +495,6 @@ Ensure you have read access to all files in the skill directory:
 ```bash
 chmod -R u+r ./my-skill
 ```
-```
 
 ---
 
@@ -516,12 +515,12 @@ chmod -R u+r ./my-skill
 
 Recommended order for implementing these changes:
 
-1. **CR-001** + **CR-006**: Add specification and releases links (quick wins)
-2. **CR-002**: Add valid skill example (high user value)
-3. **CR-003**: Document field constraints (essential reference)
-4. **CR-004**: Add error code reference (essential reference)
-5. **CR-005**: Add library usage example
-6. **CR-007** + **CR-008**: Clarify path and optional directories
-7. **CR-010** + **CR-011**: Add license and contributing sections
-8. **CR-009**: Document --help behavior
-9. **CR-012** - **CR-015**: Polish items (can be batched)
+- [x] **CR-001** + **CR-006**: Add specification and releases links (quick wins)
+- [x] **CR-002**: Add valid skill example (high user value)
+- [x] **CR-003**: Document field constraints (essential reference)
+- [x] **CR-004**: Add error code reference (essential reference)
+- [x] **CR-005**: Add library usage example
+- [ ] **CR-007** + **CR-008**: Clarify path and optional directories
+- [ ] **CR-010** + **CR-011**: Add license and contributing sections
+- [ ] **CR-009**: Document --help behavior
+- [ ] **CR-012** - **CR-015**: Polish items (can be batched)
